@@ -1,34 +1,41 @@
 # 可选 Blender 子技能的分工
 
-先读任务需要的那一行。按表中的技能名在当前会话技能目录找到并打开相应的 `SKILL.md`；具体脚本相对该技能目录解析。若环境只装了总控包，仍可按本包中的量图、造型和验收说明工作。下表的子技能是可选的专业入口。
+## 来源与安装
+
+下表的 30 个子技能和末尾的 4 个辅助脚本来自 RobLe3 维护的 cc-blender-skill。链接均固定到 v1.4.0 对应的提交 `a2634b5`。上游以 MIT 许可发布；本包只提供调用说明和链接，子技能由上游单独分发。[上游仓库](https://github.com/RobLe3/cc-blender-skill) · [该版本的技能目录](https://github.com/RobLe3/cc-blender-skill/tree/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills) · [上游许可证](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/LICENSE)
+
+**只安装本技能时**，按[量图与配准](registration.md)建立尺度和相机，按[造型与装配](form.md)制作几何，再按[验收与交付](acceptance.md)测量截面、机构和轮廓。已配准的蒙版可直接交给[包内比较脚本](../scripts/compare_registered.py)。
+
+**需要上游子技能时**，可用 `git clone --branch v1.4.0 --depth 1 https://github.com/RobLe3/cc-blender-skill.git` 取得已核对的版本。Codex 用户按上游说明将 `plugin/skills/` 下的各个技能目录注册到技能目录；Claude Code 用户按宿主指南安装插件。要让上游通过 MCP 操作 Blender，还需按其后端指南配置 Blender 与服务。安装后，从宿主技能列表确认所需名称可见，再按表选择。[安装说明](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/README.md#quick-install) · [宿主指南](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/text-to-blender/references/agent-hosts.md) · [Blender 后端指南](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/text-to-blender/references/mcp-backends.md)
+
+## 按任务选择
 
 | 遇到什么任务 | 优先使用 | 交给下一步的结果 |
 | --- | --- | --- |
-| 选 Blender 后端、确认连接的是目标场景 | `text-to-blender` | 实际运行时、文件、可用操作和受支持的执行路径。 |
-| 跨多个工序、需要协调已有流程 | `blender-pro-workflow`、`blender-skill-harmonizer` | 本次阶段顺序和交接条件；以用户交付阶段作为终点。 |
-| 整理艺术图、图纸、线稿的依据 | `reference-analysis-validator`、`reference-to-3d` | 图集角色、可见部件、需求与候选蒙版。 |
-| 多张图需要统一坐标或彼此矛盾 | `orthographic-registration`、`multiview-constraint-solver` | 每视图像素变换、单位、共同基准和冲突处置。 |
-| 线条相接、部件覆盖，或已有可用轮廓 | `source-part-segmentation`、`contour-to-mesh`；工程正交线稿用 `wireframe-to-3d` | 带孔洞的部件轮廓、深度约束和对应截面。 |
-| 品牌标志、吉祥物有严格的轮廓和配色要求 | `mascot-logo-reconstruction` | 各部件的形状、前后层次及图集对应关系。 |
-| 分面、壳体、实体缺口、组装及局部返修 | `image-to-blender-production`、`blender-modeling` | 可编辑几何及对应的截面/连接/光轴检查；前者附组件审核脚本。 |
-| UV、贴花或给定的纹理图集 | `blender-uv-texturing`、`atlas-uv-fitting` | 稳定几何上的材质槽、独立 UV 岛和图集分区。 |
-| 贴图与形状不符、侧壁或背面缺图 | `texture-driven-mesh-fitting`、`closed-surface-uv-coverage` | 修正后的边界对应关系以及前、后、侧的覆盖证据。 |
-| 比较同机位造型 | `blender-cameras`、`multiview-fit-loop`、`landmark-fit-repair` | 锁定的对照相机、分视角差异和具体到地标的修改量。 |
-| 形体接近但质感、透明件或发光效果不对 | `blender-materials`、`blender-lighting`、`reference-look-calibration` | 同一形体、机位、曝光条件下复测的材质及照明。 |
-| 活动结构、表情或纹理状态变化 | `blender-animation`；纹理驱动变化用 `texture-state-animation`；关键帧和动作接触表用 `animation-quality-gate` | 时间轴、关键姿势、运动净空和帧间稳定性。只有参考或委托要求环形动态 HUD 时才用 `orbital-hud-motion`。 |
-| 反复返修，外观或多个交付指标退化 | `fit-repair-optimizer`、`quality-refinement-autoloop` | 按相机、几何、材质等原因排定的修复顺序与回归证据。 |
-| 从已保存母版出图，或明确需要下游格式 | `blender-rendering`；另有导出要求时接 `blender-export` | 从交付母版渲染的图件；如需导出，再回读导出物验证材质、单位和动作。 |
+| 选 Blender 后端、确认连接的是目标场景 | [text-to-blender](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/text-to-blender/SKILL.md) | 实际运行时、文件、可用操作和受支持的执行路径。 |
+| 跨多个工序、需要协调已有流程 | [blender-pro-workflow](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-pro-workflow/SKILL.md)、[blender-skill-harmonizer](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-skill-harmonizer/SKILL.md) | 本次阶段顺序和交接条件；以用户交付阶段作为终点。 |
+| 整理艺术图、图纸、线稿的依据 | [reference-analysis-validator](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/reference-analysis-validator/SKILL.md)、[reference-to-3d](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/reference-to-3d/SKILL.md) | 图集角色、可见部件、需求与候选蒙版。 |
+| 多张图需要统一坐标或彼此矛盾 | [orthographic-registration](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/orthographic-registration/SKILL.md)、[multiview-constraint-solver](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/multiview-constraint-solver/SKILL.md) | 每视图像素变换、单位、共同基准和冲突处置。 |
+| 线条相接、部件覆盖，或已有可用轮廓 | [source-part-segmentation](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/source-part-segmentation/SKILL.md)、[contour-to-mesh](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/contour-to-mesh/SKILL.md)；工程正交线稿用 [wireframe-to-3d](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/wireframe-to-3d/SKILL.md) | 带孔洞的部件轮廓、深度约束和对应截面。 |
+| 品牌标志、吉祥物有严格的轮廓和配色要求 | [mascot-logo-reconstruction](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/mascot-logo-reconstruction/SKILL.md) | 各部件的形状、前后层次及图集对应关系。 |
+| 分面、壳体、实体缺口、组装及局部返修 | [blender-modeling](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-modeling/SKILL.md) | 可编辑几何；截面、连接与光轴可按包内[造型](form.md)与[验收](acceptance.md)说明，从求值网格复核。 |
+| UV、贴花或给定的纹理图集 | [blender-uv-texturing](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-uv-texturing/SKILL.md)、[atlas-uv-fitting](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/atlas-uv-fitting/SKILL.md) | 稳定几何上的材质槽、独立 UV 岛和图集分区。 |
+| 贴图与形状不符、侧壁或背面缺图 | [texture-driven-mesh-fitting](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/texture-driven-mesh-fitting/SKILL.md)、[closed-surface-uv-coverage](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/closed-surface-uv-coverage/SKILL.md) | 修正后的边界对应关系以及前、后、侧的覆盖证据。 |
+| 比较同机位造型 | [blender-cameras](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-cameras/SKILL.md)、[multiview-fit-loop](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/multiview-fit-loop/SKILL.md)、[landmark-fit-repair](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/landmark-fit-repair/SKILL.md) | 锁定的对照相机、分视角差异和具体到地标的修改量。 |
+| 形体接近但质感、透明件或发光效果不对 | [blender-materials](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-materials/SKILL.md)、[blender-lighting](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-lighting/SKILL.md)、[reference-look-calibration](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/reference-look-calibration/SKILL.md) | 同一形体、机位、曝光条件下复测的材质及照明。 |
+| 活动结构、表情或纹理状态变化 | [blender-animation](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-animation/SKILL.md)；纹理驱动变化用 [texture-state-animation](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/texture-state-animation/SKILL.md)；关键帧和动作接触表用 [animation-quality-gate](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/animation-quality-gate/SKILL.md) | 时间轴、关键姿势、运动净空和帧间稳定性。只有参考或委托要求环形动态 HUD 时才用 [orbital-hud-motion](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/orbital-hud-motion/SKILL.md)。 |
+| 反复返修，外观或多个交付指标退化 | [fit-repair-optimizer](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/fit-repair-optimizer/SKILL.md)、[quality-refinement-autoloop](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/quality-refinement-autoloop/SKILL.md) | 按相机、几何、材质等原因排定的修复顺序与回归证据。 |
+| 从已保存母版出图，或明确需要下游格式 | [blender-rendering](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-rendering/SKILL.md)；另有导出要求时接 [blender-export](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/blender-export/SKILL.md) | 从交付母版渲染的图件；如需导出，再回读导出物验证材质、单位和动作。 |
 
 **使用旧工具时检查输入语义。** 有些旧比较器会自动改变不同尺寸输入的宽高，有些只实现四个固定视角，或把轮廓线稿与实体面积遮罩混作一种模式。先生成已配准的同画幅输入，覆盖实际要求的每个方向。局部开放边、遮挡区或基线回归可用本包的比较脚本。项目约定优先于子技能示例中的阈值、机位数、输出格式和默认文件名。
 
-## 可以直接复用的工具
+## 上游辅助脚本
 
-下列路径均相对对应子技能目录。执行前先读该技能的输入约定，输出交给表中下一环节。
+以下链接指向上游脚本源码。使用时从该版本的检出目录运行，按上游说明准备图像处理依赖。[安装与依赖](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/README.md#quick-install)
 
 | 工具 | 输入与用途 |
 | --- | --- |
-| `reference-analysis-validator/scripts/reference_manifest_compiler.py` | 输入图片或目录，通过 `--out` 输出图像测量清单。人工补上造型仲裁图、部件语义和状态关系。 |
-| `orthographic-registration/scripts/register_views.py` | 输入已分开的正交视图，输出初始边界记录；再用物理锚点、视向和左右手校正配准。 |
-| `multiview-constraint-solver/scripts/view_constraint_report.py` | 读取含各视图 `bbox=[x,y,w,h]` 的 JSON，检验共用轴的一致性。先确认图像尺度可比，再解释数值冲突。 |
-| `image-to-blender-production/scripts/audit_blender.py` | 在 Blender 中打开指定母版，用 `--spec 检查规格.json --out 检查结果.json` 检查命名部件、截面、圆环或光轴；按项目运行器传递脚本参数。 |
-| `animation-quality-gate/scripts/animation_contact_sheet.py` | 输入已渲染的帧文件，通过 `--out-image` 和 `--out-report` 生成接触表与记录。机构干涉及姿态回归另从三维数据验证。 |
+| [reference_manifest_compiler.py](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/reference-analysis-validator/scripts/reference_manifest_compiler.py) | 输入图片或目录，通过 `--out` 输出图像测量清单。人工补上造型仲裁图、部件语义和状态关系。 |
+| [register_views.py](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/orthographic-registration/scripts/register_views.py) | 输入已分开的正交视图，输出初始边界记录；再用物理锚点、视向和左右手校正配准。 |
+| [view_constraint_report.py](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/multiview-constraint-solver/scripts/view_constraint_report.py) | 读取含各视图 `bbox=[x,y,w,h]` 的 JSON，检验共用轴的一致性。先确认图像尺度可比，再解释数值冲突。 |
+| [animation_contact_sheet.py](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills/animation-quality-gate/scripts/animation_contact_sheet.py) | 输入已渲染的帧文件，通过 `--out-image` 和 `--out-report` 生成接触表与记录。机构干涉及姿态回归另从三维数据验证。 |
