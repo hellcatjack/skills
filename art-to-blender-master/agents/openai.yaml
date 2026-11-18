@@ -1,0 +1,4 @@
+interface:
+  display_name: "艺术效果图到 Blender 母版"
+  short_description: "从单张或多视图参考量取结构、制作可编辑母版，并用固定机位检验造型"
+  default_prompt: "使用 $art-to-blender-master 根据我的参考图制作可编辑 Blender 母版，交付主视角对照和关键部件的验证结果。"
