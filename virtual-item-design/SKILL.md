@@ -33,6 +33,8 @@ For example, a digital ticket may need a face-on image and a redeemed state. A v
 
 ## Calibrated Views and Publication
 
+Before adopting a dimensioned orthographic set or handing it to a modeler, check that the plan, side and end can describe one rigid object. Repeat the check when a controlling reference changes. Use [Resolving Dimensions Across Orthographic Views](references/orthographic-dimensions.md) to measure the actual published crops, reconcile conflicting dimensions, and verify the redrawn view against the approved landmarks.
+
 When relative dimensions, component fit or shared axes affect the design, use [Approved Reference Sheets](references/approved-reference-sheets.md) to select source views and check the delivered image. The same reference covers replacing one panel, verifying the others and updating a viewing index after approval.
 
 ## Opposite Orthographic Views
