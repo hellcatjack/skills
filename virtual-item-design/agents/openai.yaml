@@ -1,0 +1,4 @@
+interface:
+  display_name: "Virtual Item Design"
+  short_description: "Design original virtual items with step-by-step approval"
+  default_prompt: "Use $virtual-item-design to develop an original virtual item. Start with a design brief and wait for my approval before each image or edit."
