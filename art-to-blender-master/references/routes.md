@@ -2,7 +2,7 @@
 
 ## 来源与安装
 
-下表的 30 个子技能和末尾的 4 个辅助脚本来自 RobLe3 维护的 cc-blender-skill。链接均固定到 v1.4.0 对应的提交 `a2634b5`。上游以 MIT 许可发布；本包只提供调用说明和链接，子技能由上游单独分发。[上游仓库](https://github.com/RobLe3/cc-blender-skill) · [该版本的技能目录](https://github.com/RobLe3/cc-blender-skill/tree/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills) · [上游许可证](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/LICENSE)
+下表的 30 个子技能和末尾的 4 个辅助脚本来自 RobLe3 维护的 cc-blender-skill。链接均固定到 v1.4.0 对应的提交 `a2634b5`。上游以 MIT 许可发布。可选子技能和辅助脚本可按需从上游取得。[上游 MIT 许可全文](upstream-license.txt) · [上游仓库](https://github.com/RobLe3/cc-blender-skill) · [该版本的技能目录](https://github.com/RobLe3/cc-blender-skill/tree/a2634b588e80265e796aa53f8ab178d75105c2af/plugin/skills) · [上游许可证](https://github.com/RobLe3/cc-blender-skill/blob/a2634b588e80265e796aa53f8ab178d75105c2af/LICENSE)
 
 **只安装本技能时**，按[量图与配准](registration.md)建立尺度和相机，按[造型与装配](form.md)制作几何，再按[验收与交付](acceptance.md)测量截面、机构和轮廓。已配准的蒙版可直接交给[包内比较脚本](../scripts/compare_registered.py)。
 
